@@ -1,3 +1,5 @@
+import Feed from "@components/Feed";
+
 const Home = () => {
   return (
     <section className="w-full flex-center flex-col">
@@ -12,6 +14,7 @@ const Home = () => {
         and disseminate imaginative prompts, harnessing the power of AI to
         inspire new ideas.
       </p>
+      <Feed />
     </section>
   );
 };
