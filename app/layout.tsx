@@ -1,16 +1,22 @@
-import Nav from "@components/Nav";
-import Provider from "@components/Provider";
-import "@styles/global.css";
+import Nav from "@/components/Nav";
+import Provider from "@/components/Provider";
+import "@/styles/global.css";
+import React, { ReactNode } from "react";
 
-export const metadata = {
+export const metadata: { title: string; description: string } = {
   title: "PromptNest",
   description: "Explore & Nestle AI Prompts Together",
 };
-const RootLayout = ({ children }) => {
+
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <Provider>
+        <Provider session={undefined}>
           <div className="main">
             <div className="gradient" />
           </div>

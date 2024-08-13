@@ -5,13 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 
-import AppLogo from "@public/assets/images/logo.svg";
+import AppLogo from "@/public/assets/images/logo.svg";
 
 const Nav = () => {
   const { data: session } = useSession();
 
-  const [providers, setProviders] = useState();
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [providers, setProviders] = useState<Awaited<ReturnType<typeof getProviders>>|null>(null);
+  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   useEffect(() => {
     const setProvidersFun = async () => {
@@ -41,7 +41,11 @@ const Nav = () => {
             <Link href="/createPrompt" className="black_btn">
               Create Prompt
             </Link>
-            <button type="button" className="outline_btn" onClick={signOut}>
+            <button
+              type="button"
+              className="outline_btn"
+              onClick={() => signOut()}
+            >
               Sign out
             </button>
             <Link href="/profile">
