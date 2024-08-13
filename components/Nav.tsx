@@ -7,7 +7,7 @@ import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 
 import AppLogo from "@/public/assets/images/logo.svg";
 
-const Nav = () => {
+const Nav:React.FC = () => {
   const { data: session } = useSession();
 
   const [providers, setProviders] = useState<Awaited<ReturnType<typeof getProviders>>|null>(null);
