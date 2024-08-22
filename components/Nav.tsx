@@ -50,7 +50,7 @@ const Nav:React.FC = () => {
             </button>
             <Link href="/profile">
               <Image
-                src={AppLogo}
+                src={session?.user.image as string}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -80,7 +80,7 @@ const Nav:React.FC = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src={AppLogo}
+              src={session?.user.image as string}
               width={37}
               height={37}
               className="rounded-full"
