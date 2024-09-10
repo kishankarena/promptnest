@@ -19,10 +19,10 @@ export const options: NextAuthOptions = {
   callbacks: {
     async session({ session }) {
       const sessionUser = await User.findOne({
-        email: session.user?.email,
+        email: session?.user.email,
       });
       if (sessionUser) {
-        (session.user as { [key: string]: unknown }).id =
+        session.user.id =
           sessionUser._id.toString();
       }
       return session;

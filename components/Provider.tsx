@@ -1,12 +1,12 @@
 "use client";
 
-import { customSession } from "@/utils/commonTypes";
+import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
 interface ProviderProps {
   children: ReactNode;
-  session: customSession;
+  session: Session | null;
 }
 
 const Provider: React.FC<ProviderProps> = ({ children, session }) => {
