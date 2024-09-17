@@ -1,11 +1,13 @@
+import React, { ReactNode } from "react";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+
+import "@/styles/global.css"; 
 import Nav from "@/components/Nav";
 import Provider from "@/components/Provider";
-import "@/styles/global.css";
-import { getServerSession } from "next-auth";
-import React, { ReactNode } from "react";
 import { options } from "@/utils/authOptions";
 
-export const metadata: { title: string; description: string } = {
+export const metadata: Metadata = {
   title: "PromptNest",
   description: "Explore & Nestle AI Prompts Together",
 };
