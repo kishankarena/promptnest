@@ -8,10 +8,19 @@ import { Prompt } from "@/app/types/commonTypes";
 
 interface PromptCardProps {
   post: Prompt;
-  handleTagClick: (tag: string) => void;
+  handleTagClick?: (tag: string) => void;
+  handleEdit?: (post: Prompt) => void;
+  handleDelete?: (post: Prompt) => void;
 }
 
-const PromptCard: React.FC<PromptCardProps> = ({ post, handleTagClick }) => {
+const PromptCard: React.FC<PromptCardProps> = ({
+  post,
+  handleTagClick,
+  handleDelete,
+  handleEdit,
+}) => {
+  const { data: session } = useSession();
+  const pathName = usePathname();
   const [copied, setCopied] = useState<string>();
 
   const handleCopyClick = () => {
@@ -19,6 +28,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ post, handleTagClick }) => {
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(""), 3000);
   };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
@@ -58,10 +68,26 @@ const PromptCard: React.FC<PromptCardProps> = ({ post, handleTagClick }) => {
       <p className="my-4 font-satoshi text-sm text-gray-800">{post.prompt}</p>
       <p
         className="font-inter text-sm blue_gradient cursor-pointer"
-        onClick={() => handleTagClick(post.tag)}
+        onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         {post.tag}
       </p>
+      {session?.user.id === post.creator?._id && pathName === "/profile" && (
+        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+          <p
+            className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={() => handleEdit && handleEdit(post)}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={() => handleDelete && handleDelete(post)}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
