@@ -28,8 +28,8 @@ const Profile: React.FC<ProfileProps> = ({
           <PromptCard
             key={post._id}
             post={post}
-            handleEdit={() => handleEdit}
-            handleDelete={() => handleDelete}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
           />
         ))}
       </div>

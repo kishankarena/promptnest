@@ -9,6 +9,7 @@ import { Prompt } from "@/app/types/commonTypes";
 
 const ProfilePage = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [allPosts, setAllPosts] = useState<Prompt[]>([]);
 
   useEffect(() => {
@@ -22,7 +23,9 @@ const ProfilePage = () => {
     session?.user.id && fetchPosts();
   }, [session]);
 
-  const handleEdit = () => {};
+  const handleEdit = (post: Prompt) => {
+    router.push(`/updatePrompt?id=${post._id}`);
+  };
 
   const handleDelete = async () => {};
   return (
