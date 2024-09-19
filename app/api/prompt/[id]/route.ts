@@ -1,6 +1,7 @@
 import Prompt from "@/models/prompt";
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utils/database";
+import { revalidateTag } from "next/cache";
 
 // GET (read)
 export const GET = async (
@@ -60,7 +61,6 @@ export const DELETE = async (
 
     // Find the prompt by ID and remove it
     await Prompt.findByIdAndDelete(params.id);
-
     return NextResponse.json(
       { message: "Prompt deleted successfully" },
       { status: 200 }
