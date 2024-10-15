@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import PromptCard from "./PromptCard";
 import { Prompt } from "@/app/types/commonTypes";
 
@@ -28,6 +28,8 @@ const PromptCardList: React.FC<PrompoCardListProps> = ({
 const Feed: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [allPosts, setAllPosts] = useState<Prompt[]>([]);
+  const [searchedPosts, setSearchedPosts] = useState<Prompt[]>([]);
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -36,9 +38,29 @@ const Feed: React.FC = () => {
       setAllPosts(data);
     };
     fetchPosts();
+    return () => {
+      if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    };
   }, []);
+  // To filter prompts by userName,tag and prompt
+  const filterPrompts = (searchText: string) => {
+    const regex = new RegExp(searchText, "i"); // 'i' flag for case-insensitive search
+    return allPosts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    );
+  };
 
-  const handleSearchChange = (e: React.FormEvent) => {};
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+
+    searchTimeout.current = setTimeout(() => {
+      const searchedResults = filterPrompts(e.target.value);
+      setSearchedPosts(searchedResults);
+    }, 500);
+  };
   const handleTagClick = () => {};
   return (
     <section className="feed">
@@ -52,7 +74,11 @@ const Feed: React.FC = () => {
           className="search_input"
         />
       </form>
-      <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      {searchText ? (
+        <PromptCardList data={searchedPosts} handleTagClick={handleTagClick} />
+      ) : (
+        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };
