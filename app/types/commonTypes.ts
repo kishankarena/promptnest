@@ -15,6 +15,6 @@ export interface Prompt {
   _id: string;
   prompt: string;
   tag: string;
-  creator?: Creator;
+  creator: Creator;
 }
 
